@@ -22,7 +22,7 @@ class Creator:
             return Record(user, category, date, pay)
 
         def write_users(users):
-            f = open("app/resources/users.txt", "w")
+            f = open("users.txt", "w")
             for user in users:
                 f.write(user.get_name() + "\n")
             f.close()
