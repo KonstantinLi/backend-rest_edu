@@ -25,12 +25,14 @@ def post_user():
         user = User(request_data["name"])
         data["users"].append(user)
 
-        return "", 201
+        return "User id " + str(user.get_id()) + " was successfully created", 201
+
+    return Response(status=400)
 
 
 @app.route("/categories", methods=["GET"])
 def get_categories():
-    json_categories = request.get_json()
+    json_categories = [category.serialize() for category in data["categories"]]
     return jsonify(json_categories), 200
 
 
@@ -42,7 +44,7 @@ def post_category():
         category = Category(request_data["type"])
         data["categories"].append(category)
 
-        return "", 201
+        return "Category id " + str(category.get_id()) + " was successfully created", 201
 
     return Response(status=400)
 
