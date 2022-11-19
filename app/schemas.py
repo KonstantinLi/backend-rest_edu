@@ -13,7 +13,7 @@ class CategorySchema(Schema):
 
 class RecordSchema(Schema):
     id = fields.Int(dump_only=True)
-    user_id = fields.Int(required=True)
-    category_id = fields.Int(required=True)
+    user = fields.Int(required=True)
+    category = fields.Int(required=True)
     pay = fields.Int(required=True)
-    date_time = fields.DateTime()
+    date = fields.DateTime()
