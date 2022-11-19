@@ -8,7 +8,7 @@ class UserSchema(Schema):
 
 class CategorySchema(Schema):
     id = fields.Int(dump_only=True)
-    type = fields.Str(required=True)
+    name = fields.Str(required=True)
 
 
 class RecordSchema(Schema):
