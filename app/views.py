@@ -1,4 +1,4 @@
-from datetime import date as current_date
+from datetime import datetime
 
 from flask import url_for, redirect, request, jsonify, Response
 
@@ -51,7 +51,7 @@ def post_category():
 def post_record(id):
     user = None
     for user1 in data["users"]:
-        if user1.get_id() == id:
+        if id.isdigit() and user1.get_id() == int(id):
             user = user1
 
     if not user:
@@ -63,7 +63,8 @@ def post_record(id):
 
     if request_data and "category" in request_data and request_data and "pay" in request_data:
         for category1 in data["categories"]:
-            if category1.get_type() == request_data["category"]:
+            category_id = request_data["category"]
+            if category1.get_id() == category_id:
                 category = category1
                 break
 
@@ -73,12 +74,12 @@ def post_record(id):
         if "date" in request_data:
             date = request_data["date"]
         else:
-            date = current_date.today()
+            date = datetime.now()
 
         record = Record(user, category, date, request_data["pay"])
         data["records"].append(record)
 
-        return "", 201
+        return "Record id " + str(record.get_id()) + " was successfully created for user " + user.get_name(), 201
 
     return Response(status=400)
 
