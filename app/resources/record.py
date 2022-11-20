@@ -1,26 +1,12 @@
-from flask import abort, request, jsonify
+from app.schemas import RecordSchema
+from flask import abort, request
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from sqlalchemy.exc import IntegrityError
-
-from app import data
-from app.schemas import RecordSchema
-
-from datetime import datetime
-from .category import find_category
-from .user import find_user
 from ..db import db
 from ..models import RecordModel
 
 blp = Blueprint("record", __name__, description="operations on record")
-
-
-def find_record(record_id):
-    record = None
-    for record1 in data["records"]:
-        if record1["id"] == record_id:
-            record = record1
-    return record
 
 
 @blp.route("/records/<int:record_id>")

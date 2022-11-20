@@ -4,6 +4,7 @@ from marshmallow import Schema, fields
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
+    currency_id = fields.Int(required=False)
 
 
 class CategorySchema(Schema):
@@ -17,3 +18,8 @@ class RecordSchema(Schema):
     category_id = fields.Int(required=True)
     pay = fields.Int(required=True)
     date = fields.Str()
+
+
+class CurrencySchema(Schema):
+    id = fields.Int(dump_only=True)
+    type = fields.Str(required=True)

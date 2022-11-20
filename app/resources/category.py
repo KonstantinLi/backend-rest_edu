@@ -1,22 +1,12 @@
-from flask import abort, jsonify, request, Response
+from app.db import db
+from app.models import CategoryModel
+from app.schemas import CategorySchema
+from flask import abort
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from sqlalchemy.exc import IntegrityError
 
-from app import data
-from app.db import db
-from app.models import CategoryModel
-from app.schemas import CategorySchema
-
 blp = Blueprint("category", __name__, description="operations on category")
-
-
-def find_category(category_id):
-    category = None
-    for category1 in data["categories"]:
-        if category1["id"] == category_id:
-            category = category1
-    return category
 
 
 @blp.route("/categories/<int:category_id>")

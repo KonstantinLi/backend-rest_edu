@@ -1,22 +1,12 @@
-from flask import abort, jsonify, request, Response
+from app.db import db
+from app.models.user import UserModel
+from app.schemas import UserSchema
+from flask import abort
 from flask.views import MethodView
 from flask_smorest import Blueprint
 from sqlalchemy.exc import IntegrityError
 
-from app import data
-from app.db import db
-from app.models.user import UserModel
-from app.schemas import UserSchema
-
 blp = Blueprint("user", __name__, description="operations on user")
-
-
-def find_user(user_id):
-    user = None
-    for user1 in data["users"]:
-        if user1["id"] == user_id:
-            user = user1
-    return user
 
 
 @blp.route("/users/<int:user_id>")
