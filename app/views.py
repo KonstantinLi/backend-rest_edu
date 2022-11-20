@@ -16,11 +16,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 
 api = Api(app)
-api.register_blueprint(UserBlueprint)
-api.register_blueprint(CategoryBlueprint)
-api.register_blueprint(RecordBlueprint)
-
-api = Api(app)
 
 with app.app_context():
     db.create_all()
