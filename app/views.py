@@ -19,6 +19,8 @@ db.init_app(app)
 api = Api(app)
 
 with app.app_context():
+    # Опціонально
+    db.drop_all()
     db.create_all()
 
     if len(CurrencyModel.query.all()) == 0:
