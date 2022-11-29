@@ -39,3 +39,6 @@ api.register_blueprint(RecordBlueprint)
 api.register_blueprint(CurrencyBlueprint)
 
 
+@app.route("/")
+def index():
+    return "Welcome to my little project :)"
