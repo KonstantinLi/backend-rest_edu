@@ -19,7 +19,7 @@ class Category(MethodView):
         return category
 
     @jwt_required()
-    def remove(self, category_id):
+    def delete(self, category_id):
         category = CategoryModel.query.get_or_404(category_id)
 
         db.session.delete(category)
