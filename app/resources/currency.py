@@ -1,3 +1,5 @@
+from flask_jwt_extended import jwt_required
+
 from app.db import db
 from app.models.currency import CurrencyModel
 from app.schemas import CurrencySchema
@@ -26,10 +28,12 @@ class CurrencyList(MethodView):
         currency_list = CurrencyModel.query.all()
         return currency_list
 
+    @jwt_required()
     @blp.arguments(CurrencySchema)
     @blp.response(200, CurrencySchema)
     def post(self, currency_data):
-        currency = CurrencySchema(**currency_data)
+        currency = CurrencySchema()
+        currency.type = currency_data["type"]
 
         try:
             db.session.add(currency)

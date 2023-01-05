@@ -1,3 +1,5 @@
+from flask_jwt_extended import jwt_required
+
 from app.db import db
 from app.models import CategoryModel
 from app.schemas import CategorySchema
@@ -16,6 +18,7 @@ class Category(MethodView):
         category = CategoryModel.query.get_or_404(category_id)
         return category
 
+    @jwt_required()
     def remove(self, category_id):
         category = CategoryModel.query.get_or_404(category_id)
 
@@ -31,6 +34,7 @@ class CategoryList(MethodView):
     def get(self):
         return CategoryModel.query.all()
 
+    @jwt_required()
     @blp.arguments(CategorySchema)
     @blp.response(201, CategorySchema)
     def post(self, category_data):

@@ -1,3 +1,5 @@
+from flask_jwt_extended import jwt_required
+
 from app.schemas import RecordSchema
 from flask import abort, request
 from flask.views import MethodView
@@ -11,12 +13,14 @@ blp = Blueprint("record", __name__, description="operations on record")
 
 @blp.route("/records/<int:record_id>")
 class Record(MethodView):
+    @jwt_required()
     @blp.response(200, RecordSchema)
     def get(self, record_id):
         record = RecordModel.query.get_or_404(record_id)
         return record
 
-    def remove(self, record_id):
+    @jwt_required()
+    def delete(self, record_id):
         record = RecordModel.query.get_or_404(record_id)
 
         db.session.delete(record)
@@ -27,6 +31,7 @@ class Record(MethodView):
 
 @blp.route("/records")
 class RecordList(MethodView):
+    @jwt_required()
     @blp.response(200, RecordSchema(many=True))
     def get(self):
         records = RecordModel.query.all()
@@ -42,6 +47,7 @@ class RecordList(MethodView):
 
         return records
 
+    @jwt_required()
     @blp.arguments(RecordSchema)
     @blp.response(201, RecordSchema)
     def post(self, record_data):
